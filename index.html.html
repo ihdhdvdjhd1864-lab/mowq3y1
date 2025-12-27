@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>نظام دخول</title>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+      padding-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+    }
+    #admin {
+      display: none;
+      margin-top: 30px;
+      color: lime;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ادخل اسمك</h1>
+  <input id="username" placeholder="اسمك">
+  <br>
+  <button onclick="saveUser()">دخول</button>
+
+  <br><br>
+  <button onclick="showAdmin()">وضع الأدمن</button>
+
+  <div id="admin"></div>
+
+  <script>
+    function saveUser() {
+      let name = document.getElementById("username").value;
+
+      if (name === "") {
+        alert("اكتب اسمك");
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      users.push(name);
+      localStorage.setItem("users", JSON.stringify(users));
+
+      document.getElementById("username").value = "";
+      alert("تم الدخول");
+    }
+
+    function showAdmin() {
+      let pass = prompt("كلمة سر الأدمن");
+
+      if (pass === "1234") {
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        document.getElementById("admin").style.display = "block";
+        document.getElementById("admin").innerText =
+          "👀 اللي دخلوا: " + users.join(" , ");
+      } else {
+        alert("غلط ❌");
+      }
+    }
+  </script>
+
+</body>
+</html>
